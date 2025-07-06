@@ -1,3 +1,4 @@
+
 # QoS Impact of EDCA Configuration in Wi-Fi 6 (IEEE 802.11ax)
 
 ![ns-3 3.43](https://img.shields.io/badge/simulator-ns--3%203.43-blue)
@@ -52,13 +53,21 @@ cd ns-3.43 && git checkout 3.43
 ./ns3 build
 
 # 3) run an example scenario (optimal EDCA, 10 background STAs, 120-s sim)
-./ns3 run scratch/qos_project2.cc \
-  --enableEdca=true \
-  --enableBackground=true \
-  --nBgStations=10 \
-  --simTime=120.0 \
-  --output=results/opt_edca_bg10.json \
-  --RngRun=42
+./ns3 run "scratch/qos_project2.cc \
+  --enableEdca=[true|false]           # enable or disable EDCA queue configuration (QoS) \
+  --enableBackground=[true|false]     # add background stations with Best Effort traffic \
+  --nBgStations=<uint>                # number of background stations (works if enableBackground=true) \
+  --simTime=<float>                   # total simulation time in seconds (e.g. 120.0) \
+  --warmUpTime=<float>                # initial warm-up phase without traffic, seconds (e.g. 1.0) \
+  --output=<string>                   # output filename (JSON) \
+  --maxPackets=<uint>                 # maximum packets sent by each client \
+  --packetSizeVoip=<uint>             # VoIP packet size in bytes (e.g. 160) \
+  --packetSizeVideo=<uint>            # Video packet size in bytes (e.g. 1200) \
+  --packetSizeBe=<uint>               # Best Effort / Background packet size (e.g. 1024) \
+  --intervalVoipMs=<float>            # VoIP inter-packet interval in ms (e.g. 20.0) \
+  --intervalVideoMs=<float>           # Video inter-packet interval in ms (e.g. 33.0) \
+  --intervalBeMs=<float>              # BE / Background inter-packet interval in ms (e.g. 50.0) \
+  --RngRun=<uint>"                    # RNG seed for repeatability
 ```
 
 > **Tip:** to execute **all** predefined scenarios and generate plots, simply run  
@@ -104,4 +113,3 @@ cd ns-3.43 && git checkout 3.43
 - **Latency focus:** with `optimal_edca`, VoIP delay stays below 20 ms even under heavy load (10 STAs).  
 - **Mis-configuration costs:** `not_optimal_edca` inflates jitter up to 6× and packet-loss beyond 10 %.  
 - **Practical takeaway:** tuning Contention Windows and TXOP per Access Category is a low-cost, high-impact lever for QoS in Wi-Fi 6 deployments.
-```
