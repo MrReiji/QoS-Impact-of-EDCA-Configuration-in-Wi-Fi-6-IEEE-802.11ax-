@@ -53,7 +53,7 @@ cd ns-3.43 && git checkout 3.43
 ./ns3 build
 
 # 3) run an example scenario (optimal EDCA, 10 background STAs, 120-s sim)
-./ns3 run "scratch/qos_project2.cc \
+./ns3 run "scratch/project_code.cc \
   --enableEdca=[true|false]           # enable or disable EDCA queue configuration (QoS) \
   --enableBackground=[true|false]     # add background stations with Best Effort traffic \
   --nBgStations=<uint>                # number of background stations (works if enableBackground=true) \
@@ -72,7 +72,7 @@ cd ns-3.43 && git checkout 3.43
 
 > **Tip:** to execute **all** predefined scenarios and generate plots, simply run  
 > ```bash
-> python scripts/qos_project2_script.py
+> python scripts/project_script.py
 > ```
 
 ---
